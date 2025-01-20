@@ -39,7 +39,7 @@ class MenuPrincipalGUI extends JFrame {
             handleSelection(dataType);
         });
 
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/e.png")); // Asegúrate de que la imagen esté en la carpeta "resources/images" imageLabel = new JLabel(imageIcon); imageLabel.setPreferredSize(new Dimension(100, 100)); // Ajustar el tamaño del JLabel
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/JUST.jpg")); // Asegúrate de que la imagen esté en la carpeta "resources/images" imageLabel = new JLabel(imageIcon); imageLabel.setPreferredSize(new Dimension(100, 100)); // Ajustar el tamaño del JLabel
         imageLabel = new JLabel(imageIcon);
         imageLabel.setPreferredSize(new Dimension(100, 100));
 

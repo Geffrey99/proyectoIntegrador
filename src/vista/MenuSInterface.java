@@ -3,11 +3,15 @@ import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import modelo.AManagerInterface;
 import modelo.Libro;
 import net.bytebuddy.asm.Advice;
+
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,15 +29,80 @@ public class MenuSInterface extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         table = new JTable(new DefaultTableModel(new Object[]{"ID", "Titulo","Autor"}, 0));
+        table.setFont(new Font("Arial", Font.PLAIN,  18));
+        table.setRowHeight(30); //altura de las filas
+
+// Cambiar color de las celdas
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+            @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                cell.setBackground(row % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);// Alternar colores de filas
+                cell.setForeground(Color.BLUE); // Cambiar color de texto return cell;
+                return cell;
+            }
+    }; table.setDefaultRenderer(Object.class, cellRenderer);
+
+
+
+
+
         scrollPane = new JScrollPane(table);
         scrollPane.setVisible(false); //Inicialmente invisible
+
+
        // textArea = new JTextArea(10, 30);
-        showAllButton = new JButton("Mostrar todos");
-        insertButton = new JButton("Insertar");
-        modifyButton = new JButton("Modificar");
-        deleteButton = new JButton("Borrar");
-        searchButton = new JButton("Buscar");
-        backButton = new JButton("Volver");
+        showAllButton = new JButton("Mostrar todos",new ImageIcon(getClass().getResource("/images/global.png")));
+        showAllButton.setFont(new Font("Arial", Font.PLAIN, 20));
+       // showAllButton.setBorder(BorderFactory.createLineBorder(Color.RED, 2)); // Añadir borde de color
+        showAllButton.setBackground(Color.LIGHT_GRAY);
+
+        insertButton = new JButton("Insertar",new ImageIcon(getClass().getResource("/images/libro.png")));
+        insertButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        insertButton.setBackground(Color.LIGHT_GRAY);
+
+        modifyButton = new JButton("Modificar",new ImageIcon(getClass().getResource("/images/editar.png")));
+        modifyButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        modifyButton.setBackground(Color.LIGHT_GRAY);
+
+        deleteButton = new JButton("Borrar",new ImageIcon(getClass().getResource("/images/borrar-cuenta.png")));
+        deleteButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        deleteButton.setBackground(Color.LIGHT_GRAY);
+
+        searchButton = new JButton("Buscar",new ImageIcon(getClass().getResource("/images/buscar.png")));
+        searchButton.setFont(new Font("Arial", Font.PLAIN, 20));
+       // searchButton.setBorder(BorderFactory.createLineBorder(Color.MAGENTA, 2));
+        searchButton.setBackground(Color.LIGHT_GRAY);
+
+        backButton = new JButton("Volver",new ImageIcon(getClass().getResource("/images/pagina-de-inicio.png")));
+        backButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        backButton.setBackground(Color.LIGHT_GRAY);
+
+        // Añadir MouseListener para cambiar el cursor y el color del botón al pasar el mouse por encima
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+            private Color originalColor;
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JButton button = (JButton) e.getSource();
+                originalColor = button.getBackground();
+                button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                button.setBackground(Color.pink); // Cambiar color al pasar el mouse por encima
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                JButton button = (JButton) e.getSource();
+                button.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                button.setBackground(originalColor); // Restaurar color original
+            }
+        };
+
+        showAllButton.addMouseListener(mouseAdapter);
+        insertButton.addMouseListener(mouseAdapter);
+        modifyButton.addMouseListener(mouseAdapter);
+        deleteButton.addMouseListener(mouseAdapter);
+        searchButton.addMouseListener(mouseAdapter);
+        backButton.addMouseListener(mouseAdapter);
 
         showAllButton.addActionListener(e -> {
            // HashMap<String, Libro> todosLosLibros = fileManager.mostrarTodos();
@@ -85,7 +154,10 @@ public class MenuSInterface extends JFrame {
             dispose();
         });
 
+        setLayout(new BorderLayout());
+        add(scrollPane, BorderLayout.CENTER);
         JPanel panel = new JPanel();
+        //JPanel panel = new JPanel(new GridLayout(1, 3, 10, 10));
         panel.add(showAllButton);
         panel.add(insertButton);
         panel.add(modifyButton);
@@ -93,8 +165,7 @@ public class MenuSInterface extends JFrame {
         panel.add(searchButton);
         panel.add(backButton);
 
-        setLayout(new BorderLayout());
-        add(scrollPane, BorderLayout.CENTER);
+
         add(panel, BorderLayout.SOUTH);
 
         //panel.add(new JScrollPane(textArea));
