@@ -31,7 +31,7 @@ class MenuPrincipalGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        comboBox = new JComboBox<>(new String[]{"Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php"}); //baseX, dbo, SQLITE
+        comboBox = new JComboBox<>(new String[]{"Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php", "MongoDB"}); //baseX, dbo, SQLITE
         submitButton = new JButton("Seleccionar");
 
         submitButton.addActionListener(e -> {
@@ -78,6 +78,9 @@ class MenuPrincipalGUI extends JFrame {
                 break;
             case "Php":
                 fileManager = new FilePhpManager();
+                break;
+            case "MongoDB":
+                fileManager = new FileMongoDBManager();
                 break;
             default:
                 System.out.println("Saliendo del programa...");
