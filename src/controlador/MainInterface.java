@@ -11,6 +11,9 @@ import org.hibernate.Session;
 
 import javax.swing.*;
 
+/**
+ *
+ */
 public class MainInterface {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

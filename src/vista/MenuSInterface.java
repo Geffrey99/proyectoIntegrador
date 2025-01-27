@@ -1,20 +1,16 @@
 package vista;
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
-import com.sun.xml.bind.v2.runtime.Name;
+import controlador.book;
+import controlador.premio;
 import modelo.AManagerInterface;
 import modelo.Libro;
-import net.bytebuddy.asm.Advice;
-
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.Map;
+
 
 public class MenuSInterface extends JFrame {
     private JTable table;
@@ -24,8 +20,10 @@ public class MenuSInterface extends JFrame {
     private JPanel formPanel;
     private JTextField idField, tituloField, autorField, isbnField, annoField;
     private boolean isModifying = false; // Variable para saber si estamos modificando
-
     private JLabel actionLabel;
+
+    private book bookForm;
+    private premio premioForm;
 
     public MenuSInterface(String dataType, AManagerInterface fileManager, MenuPrincipal menuPrincipal) {
         setTitle("Menú CRUD (" + dataType + ")");
@@ -39,16 +37,9 @@ public class MenuSInterface extends JFrame {
         actionLabel = new JLabel(text);
         actionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 
-
-
-
-        table = new JTable(new DefaultTableModel(new Object[]{"ID", "Titulo", "Autor"}, 0));
+        table = new JTable(new DefaultTableModel(new Object[]{"ID", "Titulo", "Autor", "ISBN", "Año"}, 0));
         table.setFont(new Font("Arial", Font.PLAIN, 18));
         table.setRowHeight(30); //altura de las filas
-
-
-
-
 
 // Cambiar color de las celdas
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
@@ -131,45 +122,23 @@ public class MenuSInterface extends JFrame {
             // textArea.setText(convertirHashMapAString(todosLosLibros));
         });
 
-        //-------------------------INSERTAR
-        //insertButton.addActionListener(e -> {
-        //  Libro nuevoLibro = crearLibroDesdeInput();
-        // fileManager.insertarUno(nuevoLibro);
-        //actualizarTabla(fileManager.mostrarTodos());
-        //  textArea.setText("Libro insertado: " + nuevoLibro.toString());
-        //});
-
         insertButton.addActionListener(e -> {
             isModifying = false; // ----inserta
-
-            actionLabel.setText(text+" ¿Añadir nuevo libro ?");
+            actionLabel.setText(text+"¿Quieres añadir nuevo Libro?"); //PARA QUE VEA EN QUE ACCION ESTÁ
             //mostrarFormulario();
             habilitarFormulario();
         });
 
         modifyButton.addActionListener(e -> {
             isModifying = true; // --actualiza
-
-            actionLabel.setText("¿Quieres modificar un Libro?");
+            actionLabel.setText(text+ "¿Quieres modificar un Libro?");
             //mostrarFormulario();
             habilitarFormulario();
         });
 
-
-        //------------------------MODIFICAR
-/*        modifyButton.addActionListener(e -> {
-            Libro modificarLibro = crearLibroDesdeInput();
-            fileManager.modificarUno(modificarLibro);
-            actualizarTabla(fileManager.mostrarTodos());
-            // textArea.setText("Libro modificado: " + modificarLibro.toString());
-        });
-  */
-        //-----------------------DELETE
         deleteButton.addActionListener(e -> {
             inhabilitarFormulario();
-
             actionLabel.setText(text);
-
             String idBorrar = JOptionPane.showInputDialog("Introduzca el ID del libro que desea borrar:");
             fileManager.borrarUno(idBorrar);
             actualizarTabla(fileManager.mostrarTodos());
@@ -198,21 +167,12 @@ public class MenuSInterface extends JFrame {
             dispose();
         });
 
-        //setLayout(new BorderLayout());
-
-
-        //JPanel topPanel = new JPanel(new BorderLayout());
-        //topPanel.add(actionLabel, BorderLayout.NORTH);
-        //  topPanel.add(scrollPane, BorderLayout.CENTER);
-        //dd(topPanel, BorderLayout.CENTER);
-
 
         setLayout(new BorderLayout());
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(actionLabel, BorderLayout.NORTH);
         topPanel.add(scrollPane, BorderLayout.CENTER);
         add(topPanel, BorderLayout.CENTER);
-
         JPanel panel = new JPanel();
         panel.add(showAllButton);
         panel.add(insertButton);
@@ -221,40 +181,34 @@ public class MenuSInterface extends JFrame {
         panel.add(searchButton);
         panel.add(backButton);
 
-
         add(panel, BorderLayout.SOUTH);
 
-        //--------------------------------
-        formPanel = new JPanel(new GridLayout(6, 2));
-        formPanel.add(new JLabel("ID:"));
-        idField = new JTextField();
-        formPanel.add(idField);
 
-        formPanel.add(new JLabel("Título:"));
-        tituloField = new JTextField();
-        formPanel.add(tituloField);
+        bookForm = new book();
+        premioForm = new premio();
 
-        formPanel.add(new JLabel("Autor:"));
-        autorField = new JTextField();
-        formPanel.add(autorField);
+        JPanel formPanel = new JPanel(new GridLayout(1, 2));
+        formPanel.add(bookForm.getMainPanel());
+        formPanel.add(premioForm.getMainPremio());
 
-        formPanel.add(new JLabel("ISBN:"));
-        isbnField = new JTextField();
-        formPanel.add(isbnField);
+        add(formPanel, BorderLayout.NORTH); // Mostrar los formularios uno al lado del otro
+        formPanel.setVisible(true); // Mostrar el formulario al abrir
+        inhabilitarFormulario();
+        inhabilitarFormularioPremio();
 
-        formPanel.add(new JLabel("Año:"));
-        annoField = new JTextField();
-        formPanel.add(annoField);
-
-        saveButton = new JButton("Guardar");
-        saveButton.addActionListener(e -> {
-            if (!idField.getText().isEmpty() && !tituloField.getText().isEmpty() && !autorField.getText().isEmpty() && !isbnField.getText().isEmpty() && !annoField.getText().isEmpty()) {
+        bookForm.getGuardarButton().addActionListener(e -> {
+            if (!bookForm.getTextField1().getText().isEmpty() &&
+                    !bookForm.getTextField2().getText().isEmpty() &&
+                    !bookForm.getTextField3().getText().isEmpty() &&
+                    !bookForm.getTextField4().getText().isEmpty() &&
+                    !bookForm.getTextField5().getText().isEmpty())
+            {
                 Libro libro = new Libro(
-                        idField.getText(),
-                        tituloField.getText(),
-                        autorField.getText(),
-                        isbnField.getText(),
-                        Integer.parseInt(annoField.getText())
+                        bookForm.getTextField1().getText(),
+                        bookForm.getTextField2().getText(),
+                        bookForm.getTextField3().getText(),
+                        bookForm.getTextField4().getText(),
+                        Integer.parseInt(bookForm.getTextField5().getText())
                 );
                 if (isModifying) {
                     fileManager.modificarUno(libro);
@@ -262,83 +216,80 @@ public class MenuSInterface extends JFrame {
                     fileManager.insertarUno(libro);
                 }
                 actualizarTabla(fileManager.mostrarTodos());
-              //  ocultarFormulario();
+                limpiarFormulario(); // Limpiar el formulario
                 inhabilitarFormulario();
-                limpiarFormulario();
+                inhabilitarFormularioPremio();
             } else {
                 JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
             }
         });
-        formPanel.add(saveButton);
 
-        add(formPanel, BorderLayout.NORTH);
-        //formPanel.setVisible(false); // Inicialmente invisible
-        formPanel.setVisible(true);
-        limpiarFormulario();
-        inhabilitarFormulario();
     }
-        //panel.add(new JScrollPane(textArea));
-
-        //add(panel);
-
-    private void actualizarTabla(HashMap<String,Libro> todosLosLibros){
+    private void actualizarTabla(HashMap<String, Libro> todosLosLibros) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0); //Limpiar filas
-        todosLosLibros.forEach((id,libro) -> model.addRow(new Object[]{id,libro.getTitulo(), libro.getAutor()}));
+        model.setRowCount(0); // Limpiar filas
+        todosLosLibros.forEach((id, libro) -> model.addRow(new Object[]{id, libro.getTitulo(), libro.getAutor(), libro.getIsbn(), libro.getAnno()}));
     }
 
-    private Libro crearLibroDesdeInput() {
-        String id = JOptionPane.showInputDialog("Introduzca el ID del libro:");
-        String titulo = JOptionPane.showInputDialog("Introduzca el título del libro:");
-        String autor = JOptionPane.showInputDialog("Introduzca el autor del libro:");
-        String isbn = JOptionPane.showInputDialog("Introduzca el ISBN del libro:");
-        int anno = Integer.parseInt(JOptionPane.showInputDialog("Introduzca el año de publicación del libro:"));
 
-        return new Libro(id, titulo, autor, isbn, anno);
-    }
-
-    private String convertirHashMapAString(HashMap<String, Libro> hashMap) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Libro> entry : hashMap.entrySet()) {
-            sb.append("ID: ").append(entry.getKey()).append(", Libro: ").append(entry.getValue().toString()).append("\n");
-        }
-        return sb.toString();
-    }
-
- //   private void mostrarFormulario() {
-   //     formPanel.setVisible(true);
-    //}
-
-   // private void ocultarFormulario() {
-     //   formPanel.setVisible(false);
-    //}
-
+//-----------------------------------------------------------------------Libro
 
     private void habilitarFormulario() {
-        idField.setEnabled(true);
-        tituloField.setEnabled(true);
-        autorField.setEnabled(true);
-        isbnField.setEnabled(true);
-        annoField.setEnabled(true);
-        saveButton.setEnabled(true);
+        bookForm.getTextField1().setEnabled(true);
+        bookForm.getTextField2().setEnabled(true);
+        bookForm.getTextField3().setEnabled(true);
+        bookForm.getTextField4().setEnabled(true);
+        bookForm.getTextField5().setEnabled(true);
+        bookForm.getGuardarButton().setEnabled(true);
+        bookForm.getCancelarButton().setEnabled(true);
     }
 
     private void inhabilitarFormulario() {
-        idField.setEnabled(false);
-        tituloField.setEnabled(false);
-        autorField.setEnabled(false);
-        isbnField.setEnabled(false);
-        annoField.setEnabled(false);
-        saveButton.setEnabled(false);
+        bookForm.getTextField1().setEnabled(false);
+        bookForm.getTextField2().setEnabled(false);
+        bookForm.getTextField3().setEnabled(false);
+        bookForm.getTextField4().setEnabled(false);
+        bookForm.getTextField5().setEnabled(false);
+        bookForm.getGuardarButton().setEnabled(false);
+        bookForm.getCancelarButton().setEnabled(false);
+
     }
 
     private void limpiarFormulario() {
-        idField.setText("");
-        tituloField.setText("");
-        autorField.setText("");
-        isbnField.setText("");
-        annoField.setText("");
+        bookForm.getTextField1().setText("");
+        bookForm.getTextField2().setText("");
+        bookForm.getTextField3().setText("");
+        bookForm.getTextField4().setText("");
+        bookForm.getTextField5().setText("");
     }
+
+
+    //-----------------------------------------------------------------------Premio
+    private void habilitarFormularioPremio() {
+        premioForm.getTextField1().setEnabled(true);
+        premioForm.getTextField2().setEnabled(true);
+        premioForm.getTextField3().setEnabled(true);
+        premioForm.getComboBox1().setEnabled(true);
+    }
+    private void inhabilitarFormularioPremio() {
+        premioForm.getTextField1().setEnabled(false);
+        premioForm.getTextField2().setEnabled(false);
+        premioForm.getTextField3().setEnabled(false);
+        premioForm.getComboBox1().setEnabled(false);
+        premioForm.getACEPTARButton().setEnabled(false);
+        premioForm.getCANCELARButton().setEnabled(false);
+    }
+
+
+    private void limpiarFormularioPremio() {
+        premioForm.getTextField1().setText("");
+        premioForm.getTextField2().setText("");
+        premioForm.getTextField3().setText("");
+        premioForm.getComboBox1().setActionCommand("");
+
+    }
+
+
 
 
 }

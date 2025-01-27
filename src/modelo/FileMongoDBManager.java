@@ -23,9 +23,13 @@ public class FileMongoDBManager implements AManagerInterface {
 
         // si no existe --->>>>>
 
-        if (database.listCollectionNames().into(new ArrayList<>()).contains("libro")) {
+        // Verificar si la colección ya existe
+        if (!database.listCollectionNames().into(new ArrayList<>()).contains("libro")) {
             database.createCollection("libro");
         }
+
+        //si existe da pálante----
+        this.collection = database.getCollection("libro");
     }
 
 
