@@ -1,32 +1,30 @@
 package modelo;
 import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import java.util.UUID;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "premios")
 public class Premio implements Serializable {
-    private static final long serialVersionUID = 1l;
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion")
-    private String descripcion;
-
-    @Column(name = "anno", nullable = false)
-    private int anno;
-
     @ManyToOne
-    @Column(name = "libro_id", nullable = false)
-    private Libro Libro;
+    @JoinColumn(name = "libro_id")
+    private Libro libro;
 
-
-    public Premio() {
-
-    }
+    // Getters y Setters
 
     public Long getId() {
         return id;
@@ -44,27 +42,11 @@ public class Premio implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public int getAnno() {
-        return anno;
-    }
-
-    public void setAnno(int anno) {
-        this.anno = anno;
-    }
-
     public Libro getLibro() {
-        return Libro;
+        return libro;
     }
 
     public void setLibro(Libro libro) {
-        Libro = libro;
+        this.libro = libro;
     }
 }

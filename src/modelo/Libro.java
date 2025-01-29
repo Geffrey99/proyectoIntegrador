@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.UUID;
 
 //para que pueda escribir y leer objetos de tipo Libro desde archivos binarios
 //necesito implementar la interfaz serializable
@@ -14,7 +15,7 @@ public class Libro implements Serializable {
     private static final long serialVersionUID = 1L; // versión de la clase para la serialización
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 
 	@Column(name = "titulo", nullable = false)
@@ -35,7 +36,11 @@ public class Libro implements Serializable {
 	@OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Premio> premios;
 
-	public Libro () {};
+	//public Libro () {};
+
+	public Libro() {
+		this.id = UUID.randomUUID().toString(); // Generar un UUID como ID
+	}
 
 	public Libro(String id, String titulo, String autor, String isbn, int anno) {
 		this.id = id;
