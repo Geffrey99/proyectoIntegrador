@@ -1,12 +1,7 @@
 package modelo;
 import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-import java.util.UUID;
-import javax.persistence.*;
-import java.io.Serializable;
+
 
 @Entity
 @Table(name = "premios")

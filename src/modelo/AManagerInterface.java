@@ -9,9 +9,7 @@ public interface AManagerInterface  {
 	    public HashMap<String, Libro> mostrarTodos(); // Devuelve todos los registros
 	    
 	    public Libro insertarUno(Libro libro); // Inserta un nuevo libro
-	    
-	    //public Boolean insertarMuchos(HashMap<String, Libro> librosNuevos);
-	    
+
 	    public Libro modificarUno(Libro libro); // Modifica un libro existente
 	    
 	    public void borrarUno(String id); // Borra un libro por ID

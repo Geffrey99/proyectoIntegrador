@@ -34,7 +34,7 @@ class MenuPrincipalGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        comboBox = new JComboBox<>(new String[]{"Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php", "MongoDB", "ObjectDB"}); //baseX
+        comboBox = new JComboBox<>(new String[]{"Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php", "MongoDB", "ObjectDB", "BaseX"});
         submitButton = new JButton("Seleccionar");
 
         submitButton.addActionListener(e -> {
@@ -88,6 +88,11 @@ class MenuPrincipalGUI extends JFrame {
             case "ObjectDB":
                 fileManager = new ObjectDBManager();
                 break;
+            case "BaseX":
+                fileManager = new FileBaseXManager("Libros.xml");
+                break;
+
+
             default:
                 System.out.println("Saliendo del programa...");
                 return;
