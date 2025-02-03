@@ -1,45 +1,75 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><libros>
-  
-  <libro>
-    <id>0002</id>
-    <titulo>El nombre del viento</titulo>
-    <autor>Patrick Rothfuss</autor>
-    <isbn>978-84-01-33720-8</isbn>
-    <anno>2007</anno>
-  </libro>
-  <libro>
-    <id>0003</id>
-    <titulo>Cien años de soledad</titulo>
-    <autor>Gabriel García Márquez</autor>
-    <isbn>978-84-376-0494-7</isbn>
-    <anno>1967</anno>
-  </libro>
-  <libro>
-    <id>0004</id>
-    <titulo>1984</titulo>
-    <autor>George Orwell</autor>
-    <isbn>978-84-376-0495-4</isbn>
-    <anno>1949</anno>
-  </libro>
-  <libro>
-    <id>0005</id>
-    <titulo>Los pilares de la tierra</titulo>
-    <autor>Ken Follett</autor>
-    <isbn>978-84-01-33153-4</isbn>
-    <anno>1989</anno>
-  </libro>
-  <libro>
-    <id>0006</id>
-    <titulo>La sombra del viento</titulo>
-    <autor>Carlos Ruiz Zafón</autor>
-    <isbn>978-84-08-11100-9</isbn>
-    <anno>2001</anno>
-  </libro>
-  <libro>
-    <id>25</id>
-    <titulo>Prueba titulo</titulo>
-    <autor>Prueba autor</autor>
-    <isbn>5054-A</isbn>
-    <anno>1958</anno>
-  </libro>
-<libro><id>23PP</id><titulo>UN INTENTO MAAS</titulo><autor>32.000</autor><isbn>SDWE433324</isbn><anno>2025</anno></libro><libro><id>0001</id><titulo>pruebamen</titulo><autor>ssadsad</autor><isbn>23123da</isbn><anno>12123213</anno></libro><libro><id>1223123</id><titulo>3123123</titulo><autor>23123123</autor><isbn>23123123</isbn><anno>23123123</anno></libro><libro><id>3123123123</id><titulo>23123123</titulo><autor>23123123</autor><isbn>123123123</isbn><anno>23123123</anno></libro></libros>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libros>
+    <anno>0</anno>
+    <id>63e7d24d-0778-47fe-86b2-dd114f6fec63</id>
+    <libro>
+        <anno>234234234</anno>
+        <autor>3123123</autor>
+        <id>0006</id>
+        <isbn>123123124</isbn>
+        <titulo>424234</titulo>
+    </libro>
+    <libro>
+        <anno>1949</anno>
+        <autor>George Orwell</autor>
+        <id>0004</id>
+        <isbn>978-84-376-0495-4</isbn>
+        <titulo>1984</titulo>
+    </libro>
+    <libro>
+        <anno>1989</anno>
+        <autor>Ken Follett</autor>
+        <id>0005</id>
+        <isbn>978-84-01-33153-4</isbn>
+        <titulo>Los pilares de la tierra</titulo>
+    </libro>
+    <libro>
+        <anno>1958</anno>
+        <autor>Prueba autor</autor>
+        <id>25</id>
+        <isbn>5054-A</isbn>
+        <titulo>Prueba titulo</titulo>
+    </libro>
+    <libro>
+        <anno>1967</anno>
+        <autor>Gabriel García Márquez</autor>
+        <id>0003</id>
+        <isbn>978-84-376-0494-7</isbn>
+        <titulo>Cien años de soledad</titulo>
+    </libro>
+    <libro>
+        <anno>2025</anno>
+        <autor>32.000</autor>
+        <id>23PP</id>
+        <isbn>SDWE433324</isbn>
+        <titulo>UN INTENTO MAAS</titulo>
+    </libro>
+    <libro>
+        <anno>23123123</anno>
+        <autor>23123123</autor>
+        <id>3123123123</id>
+        <isbn>123123123</isbn>
+        <titulo>23123123</titulo>
+    </libro>
+    <libro>
+        <anno>12123213</anno>
+        <autor>ssadsad</autor>
+        <id>0001</id>
+        <isbn>23123da</isbn>
+        <titulo>pruebamen</titulo>
+    </libro>
+    <libro>
+        <anno>35235</anno>
+        <autor>GDGGDSG</autor>
+        <id>2323123</id>
+        <isbn>24234</isbn>
+        <titulo>FGER</titulo>
+    </libro>
+    <libro>
+        <anno>23123123</anno>
+        <autor>23123123</autor>
+        <id>1223123</id>
+        <isbn>23123123</isbn>
+        <titulo>3123123</titulo>
+    </libro>
+</libros>

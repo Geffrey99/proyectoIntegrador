@@ -3,17 +3,13 @@ package modelo;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.util.HashMap;
-import java.io.*;
 import java.util.HashMap;
 import java.util.stream.Collectors;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.util.HashMap;
+
 
 public class FileBaseXManager implements AManagerInterface {
     private String filePath;
@@ -61,12 +57,22 @@ public class FileBaseXManager implements AManagerInterface {
 
     @Override
     public void guardarLibros(HashMap<String, Libro> libros) {
-        // Aquí deberías implementar la lógica para guardar los libros en el archivo XML.
-        // Esto puede hacerse utilizando una biblioteca como JAXB o manualmente escribiendo el XML.
-        // Para este ejemplo, vamos a dejarlo como un método no implementado.
-        throw new UnsupportedOperationException("Método guardarLibros no implementado.");
+        Libro librosWrapper = new Libro();
+        librosWrapper.setLibros(libros.values().stream().collect(Collectors.toList()));
+/*Libros librosWrapper = new Libros()
+utilizada para crear un contenedor de la lista de libros,
+lo que facilita la serialización de la colección de objetos Libro a un archivo XML utilizando JAXB.
+ */
+        try {
+            JAXBContext context = JAXBContext.newInstance(Libro.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.marshal(librosWrapper, new File(filePath));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
-
+/*
     private HashMap<String, Libro> cargarLibros() {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -79,4 +85,23 @@ public class FileBaseXManager implements AManagerInterface {
             return new HashMap<>();
         }
     }
+*/
+    //OTRA OPCION VALIDA ☑️☑️☑️☑️☑️☑️☑️☑️ oKKKKOKOKOK
+   /*Más sencillo y directo, pero puede consumir más memoria,
+   ya que carga todo el archivo XML en memoria antes de procesarlo.
+---------------------------------------------------------------------------------*/
+   private HashMap<String, Libro> cargarLibros() {
+        try {
+            JAXBContext context = JAXBContext.newInstance(Libro.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Libro librosWrapper = (Libro) unmarshaller.unmarshal(new File(filePath));
+
+            return (HashMap<String, Libro>) librosWrapper.getLibros().stream().collect(Collectors.toMap(Libro::getId, libro -> libro));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+
 }

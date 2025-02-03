@@ -1,6 +1,8 @@
 package modelo;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.UUID;
 
 //para que pueda escribir y leer objetos de tipo Libro desde archivos binarios
 //necesito implementar la interfaz serializable
-
+@XmlRootElement(name = "libros")
 @Entity
 @Table(name = "libros")
 public class Libro implements Serializable {
@@ -37,6 +39,17 @@ public class Libro implements Serializable {
 	private List<Premio> premios;
 
 	//public Libro () {};
+
+	private List<Libro> libros;
+//PARA TRATAR CON FICHERO XML ---- USADO EN MANAGER BASE X
+	@XmlElement(name = "libro")  //indica que cada elemento de la lista será representado como un elemento <libro> en el XML.
+	public List<Libro> getLibros() {
+		return libros;
+	}
+
+	public void setLibros(List<Libro> libros) {
+		this.libros = libros;
+	}
 
 	public Libro() {
 		this.id = UUID.randomUUID().toString(); // Generar un UUID como ID

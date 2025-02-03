@@ -8,6 +8,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.HashMap;
 
+/*
+LibroHandler es una clase que extiende DefaultHandler y se utiliza para procesar eventos SAX.
+La razón para usar LibroHandler es que SAX es un parser basado en eventos que lee el XML secuencialmente
+ y dispara eventos cuando encuentra el inicio y fin de elementos, así como el contenido de texto entre ellos.
+ */
+
 public class LibroHandler extends DefaultHandler {
     private HashMap<String, Libro> libros;
     private Libro libro;
