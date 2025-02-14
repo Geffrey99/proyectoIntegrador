@@ -6,6 +6,8 @@ import utils.HibernateUtil;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import org.hibernate.Session;
 
@@ -29,24 +31,71 @@ class MenuPrincipalGUI extends JFrame {
     private JLabel imageLabel;
 
     public MenuPrincipalGUI() {
-        setTitle("Menu Principal");
+        setTitle("GESTIÓN DE DATOS 'G.F.R.Y' "); //
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        //Mi icono en el frrame
+        ImageIcon miIcono = new ImageIcon(getClass().getResource("/images/JUST.jpg"));
+        setIconImage(miIcono.getImage());
 
         comboBox = new JComboBox<>(new String[]{"Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php", "MongoDB", "ObjectDB", "BaseX"});
-        submitButton = new JButton("Seleccionar");
+        comboBox.setBackground(Color.BLACK);
+        comboBox.setForeground(Color.GREEN);
+        comboBox.setFont(new Font("Monospaced", Font.BOLD,15));
 
-        submitButton.addActionListener(e -> {
+        submitButton = new JButton("Seleccionar");
+        submitButton.setBackground(Color.BLACK);
+        submitButton.setForeground(Color.white);
+        submitButton.setFont(new Font("Monospaced", Font.BOLD,20));
+
+
+       /* submitButton.addActionListener(e -> {
             String dataType = (String) comboBox.getSelectedItem();
             handleSelection(dataType);
         });
+*/
 
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/JUST.jpg")); //
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Solicitar clave
+                JPanel panel = new JPanel(new BorderLayout());
+                JLabel label = new JLabel("CONTRASEÑA : ");
+                label.setFont(new Font("Arial", Font.PLAIN, 10));
+                //JPasswordField pass = new JPasswordField(10);
+                JPasswordField pass = new JPasswordField();
+                pass.setPreferredSize(new Dimension(pass.getPreferredSize().width, 20));
+                panel.add(label, BorderLayout.WEST);
+                panel.add(pass, BorderLayout.CENTER);
+                int option = JOptionPane.showConfirmDialog(MenuPrincipalGUI.this, panel, "Autenticación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                //if ("accesoadatos".equals(clave)) {
+                  if (option == JOptionPane.OK_OPTION) {
+                      String miClave = new String(pass.getPassword());
+                      if ("datos".equals(miClave)) {
+                          JOptionPane.showMessageDialog(MenuPrincipalGUI.this, "Clave correcta ✅");
+                          // new SiguientePantalla().setVisible(true);
+                          String dataType = (String) comboBox.getSelectedItem();
+                          handleSelection(dataType);
+                      } else {
+                          // Si la clave es incorrecta
+                          JOptionPane.showMessageDialog(MenuPrincipalGUI.this, "Clave incorrecta. Inténtelo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+                      }
+                  }else {
+                   JOptionPane.showMessageDialog(MenuPrincipalGUI.this,"Hasta pronto!!", "G.F.R.Y", JOptionPane.INFORMATION_MESSAGE);
+                      }
+            }
+        });
+
+
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/12536.png")); //
         imageLabel = new JLabel(imageIcon);
         imageLabel.setPreferredSize(new Dimension(100, 100));
+        imageLabel.setOpaque(false); //fondo transpp
 
         JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.black); //el color del fondo
         panel.add(comboBox, BorderLayout.NORTH);
         panel.add(imageLabel, BorderLayout.CENTER);
         panel.add(submitButton, BorderLayout.SOUTH);

@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -16,7 +18,7 @@ public class MenuSInterface extends JFrame {
     private JTable table;
     private JTextArea textArea;
     private JScrollPane scrollPane;
-    private JButton showAllButton, insertButton, modifyButton, deleteButton, searchButton, backButton, saveButton;
+    private JButton showAllButton, insertButton, modifyButton, deleteButton, searchButton, backButton, saveButton, BttTrans;
     private JPanel formPanel;
     private JTextField idField, tituloField, autorField, isbnField, annoField;
     private boolean isModifying = false; // Variable para saber si estamos modificando
@@ -31,6 +33,58 @@ public class MenuSInterface extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        ImageIcon miIcono = new ImageIcon(getClass().getResource("/images/JUST.jpg"));
+        setIconImage(miIcono.getImage());
+
+        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Elige opción", "Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php", "MongoDB", "ObjectDB", "BaseX"});
+        comboBox.setBackground(Color.BLACK);
+        comboBox.setForeground(Color.GREEN);
+        comboBox.setFont(new Font("Monospaced", Font.BOLD, 15));
+
+        // Deshabilitar la opción "Elige opción"
+        comboBox.setSelectedIndex(-1);
+        comboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (index == 0) {
+                    renderer.setEnabled(false);
+                } else {
+                    renderer.setEnabled(true);
+                }
+                return renderer;
+            }
+        });
+
+
+        // Crear y configurar el submitButton
+        BttTrans = new JButton("Seleccionar");
+        BttTrans.setBackground(Color.BLACK);
+        BttTrans.setForeground(Color.GREEN);
+        BttTrans.setFont(new Font("Monospaced", Font.BOLD, 15));
+
+        // Agregar ActionListener al submitButton
+        BttTrans.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption = (String) comboBox.getSelectedItem();
+                if (!"Elige opción".equals(selectedOption)) {
+                    handleSelection(selectedOption);
+                } else {
+                    JOptionPane.showMessageDialog(MenuSInterface.this, "Por favor, elige una opción válida.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+
+        // Crear un panel para contener el comboBox y el submitButton
+        JPanel panelTrans = new JPanel();
+        panelTrans.setLayout(new FlowLayout());
+        panelTrans.add(comboBox);
+        panelTrans.add(BttTrans);
+
+        add(panelTrans);
+
 
         String text = "Gestión de datos : " + dataType;
        // actionLabel = new JLabel("Bienvenido al programa 'Gestion de Datos' : " + dataType);
@@ -38,16 +92,20 @@ public class MenuSInterface extends JFrame {
         actionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 
         table = new JTable(new DefaultTableModel(new Object[]{"ID", "Titulo", "Autor", "ISBN", "Año"}, 0));
-        table.setFont(new Font("Arial", Font.PLAIN, 18));
+        table.setFont(new Font("Monospaced", Font.PLAIN, 15));
         table.setRowHeight(30); //altura de las filas
+
 
 // Cambiar color de las celdas
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                cell.setBackground(row % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);// Alternar colores de filas
-                cell.setForeground(Color.BLUE); // Cambiar color de texto return cell;
+                cell.setBackground(row % 2 == 0 ? Color.GRAY : Color.black);// Alternar colores de filas
+                cell.setForeground(Color.white); // Cambiar color de texto return cell;
+                if (value != null) {
+                    setText(value.toString().toUpperCase()); // Convertir el texto a mayúsculas
+                }
                 return cell;
             }
         };
@@ -146,6 +204,7 @@ public class MenuSInterface extends JFrame {
 
         });
         //----------------------BUSCAR
+        //    table = new JTable(new DefaultTableModel(new Object[]{"ID", "Titulo", "Autor", "ISBN", "Año"}, 0));
         searchButton.addActionListener(e -> {
             inhabilitarFormulario();
             actionLabel.setText(text);
@@ -155,7 +214,7 @@ public class MenuSInterface extends JFrame {
             if (resultado != null) {
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
                 model.setRowCount(0); // Limpiar filas existentes
-                model.addRow(new Object[]{resultado.getId(), resultado.getTitulo(), resultado.getAutor()});
+                model.addRow(new Object[]{resultado.getId(), resultado.getTitulo(), resultado.getAutor(), resultado.getIsbn(), resultado.getAnno()});
                 scrollPane.setVisible(true); // Asegurarse de que la tabla sea visible
             } else {
                 JOptionPane.showMessageDialog(null, "Libro no encontrado");
@@ -171,6 +230,7 @@ public class MenuSInterface extends JFrame {
         setLayout(new BorderLayout());
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(actionLabel, BorderLayout.NORTH);
+       // topPanel.add(panelTrans, BorderLayout.SOUTH);
         topPanel.add(scrollPane, BorderLayout.CENTER);
         add(topPanel, BorderLayout.CENTER);
         JPanel panel = new JPanel();
@@ -180,6 +240,8 @@ public class MenuSInterface extends JFrame {
         panel.add(deleteButton);
         panel.add(searchButton);
         panel.add(backButton);
+        panel.add(panelTrans);
+        panel.setBackground(Color.black);
 
         add(panel, BorderLayout.SOUTH);
 
@@ -290,6 +352,11 @@ public class MenuSInterface extends JFrame {
     }
 
 
+
+private void handleSelection(String dataType) {
+    // Aquí puedes agregar el código para manejar la selección y realizar la acción correspondiente
+    JOptionPane.showMessageDialog(this, "Seleccionaste: " + dataType, "Información", JOptionPane.INFORMATION_MESSAGE);
+}
 
 
 }
