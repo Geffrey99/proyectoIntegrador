@@ -23,9 +23,11 @@ public class MenuSInterface extends JFrame {
     private JTextField idField, tituloField, autorField, isbnField, annoField;
     private boolean isModifying = false; // Variable para saber si estamos modificando
     private JLabel actionLabel;
-
+    private JComboBox<String> comboBox;
     private book bookForm;
     private premio premioForm;
+
+    private AManagerInterface fileManager;
 
     public MenuSInterface(String dataType, AManagerInterface fileManager, MenuPrincipal menuPrincipal) {
         setTitle("Menú CRUD (" + dataType + ")");
@@ -36,6 +38,9 @@ public class MenuSInterface extends JFrame {
         ImageIcon miIcono = new ImageIcon(getClass().getResource("/images/JUST.jpg"));
         setIconImage(miIcono.getImage());
 
+        this.fileManager = fileManager;
+
+//esta es la opcion de elegir un tipo de fichero
         JComboBox<String> comboBox = new JComboBox<>(new String[]{"Elige opción", "Fichero", "XML", "Binario", "MySql", "Hibernate", "SqLite", "Php", "MongoDB", "ObjectDB", "BaseX"});
         comboBox.setBackground(Color.BLACK);
         comboBox.setForeground(Color.GREEN);
@@ -352,11 +357,9 @@ public class MenuSInterface extends JFrame {
     }
 
 
-
-private void handleSelection(String dataType) {
-    // Aquí puedes agregar el código para manejar la selección y realizar la acción correspondiente
-    JOptionPane.showMessageDialog(this, "Seleccionaste: " + dataType, "Información", JOptionPane.INFORMATION_MESSAGE);
-}
-
+    private void handleSelection(String selectedOption) {
+        fileManager.hacerCopia(selectedOption);
+        JOptionPane.showMessageDialog(this, "Datos exportados correctamente a " + selectedOption + ".", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
 
 }

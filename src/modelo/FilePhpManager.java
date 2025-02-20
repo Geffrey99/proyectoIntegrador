@@ -50,6 +50,11 @@ public class FilePhpManager implements AManagerInterface {
         // Implementación opcional si es necesario
     }
 
+    @Override
+    public void hacerCopia(String tipoFichero) {
+
+    }
+
     public HashMap<String, Libro> lee() {
         HashMap<String, Libro> auxhm = new HashMap<>();
         try {

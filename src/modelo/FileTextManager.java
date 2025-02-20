@@ -15,9 +15,13 @@ import java.util.Scanner;
 public class FileTextManager implements AManagerInterface {
 
 	private File textFile;
+	private AManagerCopia dataCopyManager;
+	private HashMap<String, Libro> libros;
 
 	public FileTextManager(String filePath) {
 		this.textFile = new File("Ficheros/" + filePath);
+		this.libros = mostrarTodos();
+		this.dataCopyManager = new AManagerCopia(libros);
 	}
 
 	@Override
@@ -160,5 +164,10 @@ public class FileTextManager implements AManagerInterface {
 			System.out.println(e.getMessage());
 		}
 		
+	}
+
+	@Override
+	public void hacerCopia(String tipoFichero) {
+		dataCopyManager.hacerCopia(tipoFichero);
 	}
 }

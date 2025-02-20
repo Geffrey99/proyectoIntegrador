@@ -72,20 +72,26 @@ lo que facilita la serialización de la colección de objetos Libro a un archivo
             e.printStackTrace();
         }
     }
-/*
-    private HashMap<String, Libro> cargarLibros() {
-        try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            LibroHandler handler = new LibroHandler();
-            saxParser.parse(new File(filePath), handler);
-            return handler.getLibros();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new HashMap<>();
-        }
+
+    @Override
+    public void hacerCopia(String tipoFichero) {
+
     }
-*/
+
+    /*
+        private HashMap<String, Libro> cargarLibros() {
+            try {
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                SAXParser saxParser = factory.newSAXParser();
+                LibroHandler handler = new LibroHandler();
+                saxParser.parse(new File(filePath), handler);
+                return handler.getLibros();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new HashMap<>();
+            }
+        }
+    */
     //OTRA OPCION VALIDA ☑️☑️☑️☑️☑️☑️☑️☑️ oKKKKOKOKOK
    /*Más sencillo y directo, pero puede consumir más memoria,
    ya que carga todo el archivo XML en memoria antes de procesarlo.

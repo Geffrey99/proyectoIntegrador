@@ -152,7 +152,12 @@ public Libro buscarUno(String id) {
 public void guardarLibros(HashMap<String, Libro> libros) {
 	// TODO -----------------
 	
-} 
+}
+
+	@Override
+	public void hacerCopia(String tipoFichero) {
+
+	}
 }
 
 

@@ -92,4 +92,9 @@ public class HibernateManager implements AManagerInterface {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void hacerCopia(String tipoFichero) {
+
 	}
+}

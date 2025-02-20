@@ -17,6 +17,8 @@ public interface AManagerInterface  {
 	    public Libro buscarUno(String id); // Busca un libro por ID
 	
 	    public void guardarLibros(HashMap<String, Libro> libros);
+
+	    public void hacerCopia(String tipoFichero);
 	
 }
 

@@ -78,12 +78,14 @@ import java.util.Map;
 					System.out.println("Error al sobrescribir el archivo: " + e.getMessage()); e.printStackTrace(); 
 					} 
 				}
-					
-				
-				
-			
-			
-			public Libro buscarUno(String impreso) {
+
+		@Override
+		public void hacerCopia(String tipoFichero) {
+
+		}
+
+
+		public Libro buscarUno(String impreso) {
 			    System.out.println("Buscando el libro con ID: " + impreso);
 			    HashMap<String, Libro> libros = recorrer();
 			    System.out.println("Libros leídos: " + libros.size());

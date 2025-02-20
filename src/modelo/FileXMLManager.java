@@ -25,13 +25,18 @@ import java.io.File;
 //Archivo XML
 public class FileXMLManager implements AManagerInterface{
 	 private String filePath; // existe un path para el archivo XML
+    private AManagerCopia dataCopyManager;
 
-	    // Constructor para inicializar el filePath
-	    public FileXMLManager(String filePath) {
-	        this.filePath = new String("Ficheros/" + filePath);
+    private HashMap<String, Libro> libros;
+
+    // Constructor para inicializar el filePath
+    public FileXMLManager(String filePath) {
+
+        this.filePath = new String("Ficheros/" + filePath);
+        this.dataCopyManager = new AManagerCopia(libros); // Inicializar DataCopyManager
 	    }
 
-
+   // Nuevo atributo para la clase DataCopyManager
 	
 	@Override
 	public HashMap<String, Libro> mostrarTodos() {
@@ -350,7 +355,12 @@ public class FileXMLManager implements AManagerInterface{
 		// TODO Auto-generated method stub
 		
 	}
-    
+
+    @Override
+    public void hacerCopia(String tipoFichero) {
+        dataCopyManager.hacerCopia(tipoFichero);
+    }
+
     /*-----------------------------------------------------------------
     *
     *

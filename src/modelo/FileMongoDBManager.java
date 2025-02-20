@@ -97,6 +97,11 @@ public class FileMongoDBManager implements AManagerInterface {
         }
     }
 
+    @Override
+    public void hacerCopia(String tipoFichero) {
+
+    }
+
     public void closeConnection() {
         mongoClient.close();
         System.out.println("Conexión cerrada");
