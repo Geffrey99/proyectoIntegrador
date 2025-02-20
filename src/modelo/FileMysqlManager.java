@@ -43,7 +43,7 @@ public HashMap<String, Libro> mostrarTodos() {
 		System.err.println(e.getMessage());
 		e.printStackTrace();
 	}
-	// TODO Auto-generated method stub
+
 	return libros;
 }
 
@@ -150,7 +150,7 @@ public Libro buscarUno(String id) {
 
 @Override
 public void guardarLibros(HashMap<String, Libro> libros) {
-	// TODO Auto-generated method stub
+	// TODO -----------------
 	
 } 
 }

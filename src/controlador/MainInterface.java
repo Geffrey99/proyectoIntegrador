@@ -89,7 +89,7 @@ class MenuPrincipalGUI extends JFrame {
         });
 
 
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/12536.png")); //
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/librooo.png")); //
         imageLabel = new JLabel(imageIcon);
         imageLabel.setPreferredSize(new Dimension(100, 100));
         imageLabel.setOpaque(false); //fondo transpp

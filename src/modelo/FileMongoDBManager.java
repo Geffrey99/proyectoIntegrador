@@ -3,8 +3,6 @@ package modelo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.mongodb.MongoClient;
-//import com.mongodb.client.MongoClient;
-//import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -43,7 +41,6 @@ public class FileMongoDBManager implements AManagerInterface {
                     doc.getString("autor"),
                     doc.getString("isbn"),
                     doc.getInteger("anno")
-                    //doc.getString("ca")
             );
             libros.put(libro.getId(), libro);
         }
@@ -67,8 +64,7 @@ public class FileMongoDBManager implements AManagerInterface {
                 .append("titulo", libro.getTitulo())
                 .append("autor", libro.getAutor())
                 .append("isbn", libro.getIsbn())
-                .append("anno", libro.getAnno())
-                .append("categoria", libro.getCategoria());
+                .append("anno", libro.getAnno());
         collection.replaceOne(new Document("id", libro.getId()), doc);
         return libro;
     }
@@ -88,7 +84,7 @@ public class FileMongoDBManager implements AManagerInterface {
                     doc.getString("autor"),
                     doc.getString("isbn"),
                     doc.getInteger("anno")
-                    //doc.getString("categoria")
+
             );
         }
         return null;
