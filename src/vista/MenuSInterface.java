@@ -358,8 +358,11 @@ public class MenuSInterface extends JFrame {
 
 
     private void handleSelection(String selectedOption) {
-        fileManager.hacerCopia(selectedOption);
-        JOptionPane.showMessageDialog(this, "Datos exportados correctamente a " + selectedOption + ".", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+//        fileManager.hacerCopia(selectedOption);
+        JOptionPane.showMessageDialog(this, "Datos exportados en construccion "
+                + selectedOption +
+                ".", "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

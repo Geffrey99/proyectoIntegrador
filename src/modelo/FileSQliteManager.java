@@ -171,8 +171,8 @@ public class FileSQliteManager implements AManagerInterface {
         }
     }
 
-    @Override
-    public void hacerCopia(String tipoFichero) {
-        //dataCopyManager.hacerCopia(tipoFichero);
-    }
+//    @Override
+//    public void hacerCopia(String tipoFichero) {
+//        //dataCopyManager.hacerCopia(tipoFichero);
+//    }
 }

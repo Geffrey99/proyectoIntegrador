@@ -79,10 +79,7 @@ import java.util.Map;
 					} 
 				}
 
-		@Override
-		public void hacerCopia(String tipoFichero) {
 
-		}
 
 
 		public Libro buscarUno(String impreso) {
@@ -156,5 +153,8 @@ import java.util.Map;
 
 			}
 
-		
+		//		@Override
+//		public void hacerCopia(String tipoFichero) {
+//
+//		}
 	}

@@ -93,8 +93,8 @@ public class HibernateManager implements AManagerInterface {
 		
 	}
 
-	@Override
-	public void hacerCopia(String tipoFichero) {
-
-	}
+//	@Override
+//	public void hacerCopia(String tipoFichero) {
+//
+//	}
 }

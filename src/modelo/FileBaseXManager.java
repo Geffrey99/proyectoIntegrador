@@ -73,10 +73,10 @@ lo que facilita la serialización de la colección de objetos Libro a un archivo
         }
     }
 
-    @Override
-    public void hacerCopia(String tipoFichero) {
-
-    }
+//    @Override
+//    public void hacerCopia(String tipoFichero) {
+//
+//    }
 
     /*
         private HashMap<String, Libro> cargarLibros() {
@@ -96,7 +96,7 @@ lo que facilita la serialización de la colección de objetos Libro a un archivo
    /*Más sencillo y directo, pero puede consumir más memoria,
    ya que carga todo el archivo XML en memoria antes de procesarlo.
 ---------------------------------------------------------------------------------*/
-   private HashMap<String, Libro> cargarLibros() {
+    private HashMap<String, Libro> cargarLibros() {
         try {
             JAXBContext context = JAXBContext.newInstance(Libro.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();

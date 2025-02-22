@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 
 public interface AManagerInterface  {
-	
+
+	//Todo funciona en todas las clases----
 	
 	    public HashMap<String, Libro> mostrarTodos(); // Devuelve todos los registros
 	    
@@ -18,7 +19,8 @@ public interface AManagerInterface  {
 	
 	    public void guardarLibros(HashMap<String, Libro> libros);
 
-	    public void hacerCopia(String tipoFichero);
+	  //TODO --Por terminar--(4) de 10
+	// public void hacerCopia(String tipoFichero);
 	
 }
 

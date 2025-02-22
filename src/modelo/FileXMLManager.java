@@ -25,7 +25,7 @@ import java.io.File;
 //Archivo XML
 public class FileXMLManager implements AManagerInterface{
 	 private String filePath; // existe un path para el archivo XML
-    private AManagerCopia dataCopyManager;
+    //private AManagerCopia dataCopyManager;
 
     private HashMap<String, Libro> libros;
 
@@ -33,7 +33,7 @@ public class FileXMLManager implements AManagerInterface{
     public FileXMLManager(String filePath) {
 
         this.filePath = new String("Ficheros/" + filePath);
-        this.dataCopyManager = new AManagerCopia(libros); // Inicializar DataCopyManager
+    //    this.dataCopyManager = new AManagerCopia(libros); // Inicializar DataCopyManager
 	    }
 
    // Nuevo atributo para la clase DataCopyManager
@@ -297,34 +297,47 @@ public class FileXMLManager implements AManagerInterface{
         }
     }
 
-    
-    /*
-     *  OBTENER UN LIBRO
-     */
-	@Override
-	public Libro buscarUno(String id) {
-		//cargo los libros actuales
+
+    @Override
+    public Libro buscarUno(String id) {
+        //cargo los libros actuales
         HashMap<String, Libro> libros = mostrarTodos();
-        
-     // Buscamos el libro por ID
+
+        // Buscamos el libro por ID
         Libro libro = libros.get(id);
         if (libro != null) {
-        
-        	System.out.println("\nLibro encontrado: ---->>>>" + libro.getTitulo());
-        	System.out.println("__________________________________________________");
+
+            System.out.println("\nLibro encontrado: ---->>>>" + libro.getTitulo());
+            System.out.println("__________________________________________________");
         } else {
             System.out.println("Libro con id -> " + id + " NO ha sido encontrado!");
         }
-        
+
         return libro; // Retornamos el libro si existe, o null si no existe
     }
     
+
+
+
+
+	@Override
+	public void guardarLibros(HashMap<String, Libro> libros) {
+
+
+	}
+
+//    @Override
+//    public void hacerCopia(String tipoFichero) {
+//
+//       //dataCopyManager.hacerCopia(tipoFichero);
+//    }
+
     /*------------------------------------------------------------------------------------
-    *
-    *
-    *----CONVERTIR ARCHIVO XML A .TXT. // .BIN
-    *
-    */
+     *
+     *
+     *---NO IMPLEMENTADO---------------TODO -CONVERTIR ARCHIVO XML A .TXT. // .BIN //
+     *
+     */
     public void escribirLibrosATxt(HashMap<Integer, Libro> libros, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Libro libro : libros.values()) {
@@ -337,7 +350,7 @@ public class FileXMLManager implements AManagerInterface{
             e.printStackTrace();
         }
     }
-    
+
     public void escribirLibrosABinario(HashMap<Integer, Libro> libros, String filePath) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(libros);  // Escribir todo el HashMap de libros
@@ -348,77 +361,4 @@ public class FileXMLManager implements AManagerInterface{
         }
     }
 
-
-
-	@Override
-	public void guardarLibros(HashMap<String, Libro> libros) {
-		// TODO Auto-generated method stub
-		
-	}
-
-    @Override
-    public void hacerCopia(String tipoFichero) {
-        dataCopyManager.hacerCopia(tipoFichero);
-    }
-
-    /*-----------------------------------------------------------------
-    *
-    *
-    *
-    *PARA ACTUALIZAR LOS CAMBIOS EN MI ARCHIVO XML
-    *
-    * 
-    */
-    
-    
-    /*public void escribirXML(HashMap<Integer, Libro> libros, String filePath) {
-        try {
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.newDocument();
-
-            // Crear el elemento raíz
-            Element rootElement = doc.createElement("libros");
-            doc.appendChild(rootElement);
-
-            // Recorrer el HashMap y agregar los libros al documento
-            for (Libro libro : libros.values()) {
-                Element libroElement = doc.createElement("libro");
-
-                Element idElement = doc.createElement("id");
-                idElement.appendChild(doc.createTextNode(Integer.toString(libro.getId())));
-                libroElement.appendChild(idElement);
-               
-                Element tituloElement = doc.createElement("titulo");
-                tituloElement.appendChild(doc.createTextNode(libro.getTitulo()));
-                libroElement.appendChild(tituloElement);
-
-                Element autorElement = doc.createElement("autor");
-                autorElement.appendChild(doc.createTextNode(libro.getAutor()));
-                libroElement.appendChild(autorElement);
-
-                Element isbnElement = doc.createElement("isbn");
-                isbnElement.appendChild(doc.createTextNode(libro.getIsbn()));
-                libroElement.appendChild(isbnElement);
-
-                Element annoElement = doc.createElement("anno");
-                annoElement.appendChild(doc.createTextNode(Integer.toString(libro.getAnno())));
-                libroElement.appendChild(annoElement);
-
-                rootElement.appendChild(libroElement);
-            }
-            //GUARDAR LOS CAMBIOS EN EL ARCHIVO XML --------------
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-
-            System.out.println("Archivo XML actualizado correctamente.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */
-    
 }
